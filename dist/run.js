@@ -19,6 +19,7 @@ const datadog_1 = require("./datadog");
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     // Load insputs
     const dd_api_key = inputs.dd_api_key;
+    process.env.DD_API_KEY = dd_api_key;
     const magicpod_api_key = inputs.magicpod_api_key;
     const magicpod_organization_name = inputs.magicpod_organization_name;
     const magicpod_project_name = inputs.magicpod_project_name;
