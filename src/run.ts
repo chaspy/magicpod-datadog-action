@@ -9,7 +9,7 @@ type Inputs = {
 export const run = async (inputs: Inputs): Promise<void> => {
   core.info('hello')
 
-  // load inputs
+  // load insputs
   const dd_api_key = inputs.dd_api_key
   const magicpod_api_key = inputs.magicpod_api_key
 
