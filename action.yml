@@ -7,6 +7,12 @@ inputs:
   magicpod_api_token:
     description: 'MagicPod API Token'
     required: true
+  magicpod_organization_name:
+    description: 'MagicPod Organization Name'
+    required: true
+  magicpod_project_name:
+    description: 'MagicPod Organization Name'
+    required: true
 outputs:
   issue:
     description: 'Created issue details'
