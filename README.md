@@ -31,9 +31,9 @@ This is an action to send metrics of MagicPod to Datadog.
 
 ## Metrics
 
-| Name                                                       | Description                                                                              | Type  | Unit   | Tag                                               |
-| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- | ------ | ------------------------------------------------- |
-| `custom.magicpod_datadog_action.batch_run.duration_second` | Time taken to execute the Batch Run. (Difference between `finished_at` and `started_at`) | Gauge | Second | `batch_run_number`, `status`, `test_setting_name` |
+| Name                                                       | Description                                                                              | Type  | Unit   |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- | ------ |
+| `custom.magicpod_datadog_action.batch_run.duration_second` | Time taken to execute the Batch Run. (Difference between `finished_at` and `started_at`) | Gauge | Second |
 
 ## Supported Tags
 
