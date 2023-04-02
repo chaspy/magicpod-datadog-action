@@ -43,7 +43,8 @@ const core = __importStar(__nccwpck_require__(486));
 const run_1 = __nccwpck_require__(925);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, run_1.run)({
-        message: core.getInput('message', { required: true }),
+        dd_api_key: core.getInput('dd_api_key', { required: true }),
+        magicpod_api_key: core.getInput('magicpod_api_key', { required: true }),
     });
 });
 main().catch((e) => core.setFailed(e instanceof Error ? e : String(e)));
@@ -93,7 +94,15 @@ exports.run = void 0;
 const core = __importStar(__nccwpck_require__(486));
 // eslint-disable-next-line @typescript-eslint/require-await
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
-    core.info(`message: ${inputs.message}`);
+    core.info('hello');
+    // load inputs
+    // MAGICPOD_API_KEY
+    // DD_API_KEY
+    // Get response from magicpod
+    // parse response
+    // calcurate duration
+    // build metrics for datadog
+    // send metric to datadog
 });
 exports.run = run;
 
