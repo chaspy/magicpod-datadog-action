@@ -1,8 +1,10 @@
 import * as core from '@actions/core'
+import { run } from './run'
 
-async function run() {
-  const message = core.getInput('message')
-  console.log(message)
+const main = async (): Promise<void> => {
+  await run({
+    name: core.getInput('message', { required: true }),
+  })
 }
 
-run()
+main().catch((e) => core.setFailed(e instanceof Error ? e : String(e)))
