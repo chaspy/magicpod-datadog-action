@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.processBatchRunsData = exports.getBatchRuns = void 0;
 const axios_1 = __importDefault(require("axios"));
 const datadog_1 = require("./datadog");
-function getBatchRuns(magicpod_api_token, magicpod_organization_name, magicpod_project_name, count) {
+function getBatchRuns(magicpod_api_token, magicpod_organization_name, magicpod_project_name, magicpod_record_count) {
     return __awaiter(this, void 0, void 0, function* () {
-        const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`;
+        const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${magicpod_record_count}`;
         const headers = {
             accept: 'application/json',
             Authorization: `Token ${magicpod_api_token}`
