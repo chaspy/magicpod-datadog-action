@@ -28,3 +28,17 @@ This is an action to send metrics of MagicPod to Datadog.
 | magicpod_api_token         | [MagicPod API Token](https://app.magicpod.com/accounts/api-token/) | yes      |
 | magicpod_organization_name | MagicPod Organization Name                                         | Yes      |
 | magicpod_project_name      | MagicPod Project Name                                              | Yes      |
+
+## Metrics
+
+| Name                                                       | Description                                                                              | Type  | Unit   | Tag                                               |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- | ------ | ------------------------------------------------- |
+| `custom.magicpod_datadog_action.batch_run.duration_second` | Time taken to execute the Batch Run. (Difference between `finished_at` and `started_at`) | Gauge | Second | `batch_run_number`, `status`, `test_setting_name` |
+
+## Supported Tags
+
+`batch_run_number`, `status`, `test_setting_name`.
+
+See [API Document](https://magic-pod.com/api/v1.0/doc/) for the details. (Models / BatchRun Section)
+
+The action uses GET `/v1.0/batch_runs` API.
