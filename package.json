@@ -1,7 +1,7 @@
 {
   "name": "magicpod-datadog-action",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "GitHub Action to send metrics of MagicPod to Datadog.",
   "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,8 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/chaspy/magicpod-datadog-action.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "magicpod",
+    "datadog"
+  ],
+  "author": "Takeshi Kondo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/chaspy/magicpod-datadog-action/issues"
