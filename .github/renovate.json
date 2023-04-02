@@ -1,0 +1,5 @@
+{
+  "extends": ["config:base"],
+  "enabledManagers": ["npm", "github-actions"],
+  "labels": ["r:{{depName}}", "r:{{depName}}/{{newVersion}}"]
+}
