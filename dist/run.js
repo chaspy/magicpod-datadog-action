@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = void 0;
 const axios_1 = __importDefault(require("axios"));
+const datadog_1 = require("./datadog");
 // eslint-disable-next-line @typescript-eslint/require-await
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     // Load insputs
@@ -31,32 +32,24 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
             console.log('Error occurred, no data received');
         }
     }))();
-    // build metrics for datadog
-    // send metric to datadog
 });
 exports.run = run;
 function processBatchRunsData(batchRunsData) {
     let batchRunsDataArray = [];
-    console.log(`Organization Name: ${batchRunsData.organization_name}`);
-    console.log(`Project Name: ${batchRunsData.project_name}`);
-    console.log('Batch Runs:');
     batchRunsData.batch_runs.forEach((batchRun, index) => {
-        console.log(`    Batch Run Number: ${batchRun.batch_run_number}`);
-        console.log(`    Status: ${batchRun.status}`);
-        console.log(`    Started At: ${batchRun.started_at}`);
-        //    console.log(`    Finished At: ${batchRun.finished_at}`)
         const durationSeconds = calculateTimeDifferenceSecond(batchRun.started_at, batchRun.finished_at);
-        console.log(`   Duration Second: ${durationSeconds}`);
-        const newData = {
-            batch_run_number: batchRun.batch_run_number,
-            test_setting_name: batchRun.test_setting_name,
-            status: batchRun.status,
-            started_at: batchRun.started_at,
-            duration: durationSeconds
-        };
-        batchRunsDataArray[index] = newData;
+        const batch_run_number = batchRun.batch_run_number;
+        const test_setting_name = batchRun.test_setting_name;
+        const status = batchRun.status;
+        const started_at = batchRun.started_at;
+        const timestamp = getUnixTimestamp(started_at);
+        (0, datadog_1.submitMetircs)(timestamp, durationSeconds, batch_run_number, test_setting_name, status);
     });
-    console.log(batchRunsDataArray);
+}
+function getUnixTimestamp(dateString) {
+    const dateObject = new Date(dateString);
+    const unixTimestamp = dateObject.getTime();
+    return unixTimestamp;
 }
 function calculateTimeDifferenceSecond(time1, time2) {
     const date1 = new Date(time1);

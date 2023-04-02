@@ -22,6 +22,7 @@
   "homepage": "https://github.com/chaspy/magicpod-datadog-action#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
+    "@datadog/datadog-api-client": "^1.11.0",
     "@types/axios": "^0.14.0",
     "axios": "^1.3.4"
   },

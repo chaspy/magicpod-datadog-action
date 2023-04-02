@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import axios, {AxiosResponse} from 'axios'
+import {submitMetircs} from './datadog'
 
 type Inputs = {
   dd_api_key: string
@@ -37,7 +38,7 @@ interface BatchRunsData {
   test_setting_name: string
   status: string
   started_at: string
-  duration: number // second
+  duration_seconds: number // second
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -63,41 +64,38 @@ export const run = async (inputs: Inputs): Promise<void> => {
       console.log('Error occurred, no data received')
     }
   })()
-
-  // build metrics for datadog
-
-  // send metric to datadog
 }
 
 function processBatchRunsData(batchRunsData: BatchRuns): void {
   let batchRunsDataArray: BatchRunsData[] = []
 
-  console.log(`Organization Name: ${batchRunsData.organization_name}`)
-  console.log(`Project Name: ${batchRunsData.project_name}`)
-  console.log('Batch Runs:')
   batchRunsData.batch_runs.forEach((batchRun, index) => {
-    console.log(`    Batch Run Number: ${batchRun.batch_run_number}`)
-    console.log(`    Status: ${batchRun.status}`)
-    console.log(`    Started At: ${batchRun.started_at}`)
-    //    console.log(`    Finished At: ${batchRun.finished_at}`)
     const durationSeconds = calculateTimeDifferenceSecond(
       batchRun.started_at,
       batchRun.finished_at
     )
-    console.log(`   Duration Second: ${durationSeconds}`)
 
-    const newData: BatchRunsData = {
-      batch_run_number: batchRun.batch_run_number,
-      test_setting_name: batchRun.test_setting_name,
-      status: batchRun.status,
-      started_at: batchRun.started_at,
-      duration: durationSeconds
-    }
+    const batch_run_number = batchRun.batch_run_number
+    const test_setting_name = batchRun.test_setting_name
+    const status = batchRun.status
+    const started_at = batchRun.started_at
+    const timestamp = getUnixTimestamp(started_at)
 
-    batchRunsDataArray[index] = newData
+    submitMetircs(
+      timestamp,
+      durationSeconds,
+      batch_run_number,
+      test_setting_name,
+      status
+    )
   })
+}
 
-  console.log(batchRunsDataArray)
+function getUnixTimestamp(dateString: string): number {
+  const dateObject: Date = new Date(dateString)
+  const unixTimestamp: number = dateObject.getTime()
+
+  return unixTimestamp
 }
 
 function calculateTimeDifferenceSecond(time1: string, time2: string): number {
