@@ -31,19 +31,43 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = void 0;
 const core = __importStar(require("@actions/core"));
+const axios_1 = __importDefault(require("axios"));
 // eslint-disable-next-line @typescript-eslint/require-await
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     core.info('hello');
-    // load inputs
-    // MAGICPOD_API_KEY
-    // DD_API_KEY
+    // load insputs
+    const dd_api_key = inputs.dd_api_key;
+    const magicpod_api_key = inputs.magicpod_api_key;
+    const magicpod_organization_name = inputs.magicpod_organization_name;
+    const magicpod_project_name = inputs.magicpod_project_name;
+    const count = 100;
     // Get response from magicpod
+    sendHttpRequest(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count);
     // parse response
     // calcurate duration
     // build metrics for datadog
     // send metric to datadog
 });
 exports.run = run;
+function sendHttpRequest(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`;
+        const headers = {
+            accept: 'application/json',
+            Authorization: `Token ${magicpod_api_key}`
+        };
+        try {
+            const response = yield axios_1.default.get(url, { headers });
+            console.log(response.data);
+        }
+        catch (error) {
+            console.error(`Error: ${error}`);
+        }
+    });
+}
