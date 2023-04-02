@@ -31,32 +31,32 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
             console.log('Error occurred, no data received');
         }
     }))();
-    // parse response
-    // calcurate duration
     // build metrics for datadog
     // send metric to datadog
 });
 exports.run = run;
 function processBatchRunsData(batchRunsData) {
+    let batchRunsDataArray = [];
     console.log(`Organization Name: ${batchRunsData.organization_name}`);
     console.log(`Project Name: ${batchRunsData.project_name}`);
     console.log('Batch Runs:');
     batchRunsData.batch_runs.forEach((batchRun, index) => {
-        console.log(`  Batch Run #${index + 1}`);
         console.log(`    Batch Run Number: ${batchRun.batch_run_number}`);
         console.log(`    Status: ${batchRun.status}`);
         console.log(`    Started At: ${batchRun.started_at}`);
-        console.log(`    Finished At: ${batchRun.finished_at}`);
-        console.log(`    Test Cases:`);
-        console.log(`      Succeeded: ${batchRun.test_cases.succeeded}`);
-        console.log(`      Failed: ${batchRun.test_cases.failed}`);
-        console.log(`      Aborted: ${batchRun.test_cases.aborted}`);
-        console.log(`      Unresolved: ${batchRun.test_cases.unresolved}`);
-        console.log(`      Total: ${batchRun.test_cases.total}`);
-        console.log(`    URL: ${batchRun.url}`);
-        const diff = calculateTimeDifferenceSecond(batchRun.started_at, batchRun.finished_at);
-        console.log(diff);
+        //    console.log(`    Finished At: ${batchRun.finished_at}`)
+        const durationSeconds = calculateTimeDifferenceSecond(batchRun.started_at, batchRun.finished_at);
+        console.log(`   Duration Second: ${durationSeconds}`);
+        const newData = {
+            batch_run_number: batchRun.batch_run_number,
+            test_setting_name: batchRun.test_setting_name,
+            status: batchRun.status,
+            started_at: batchRun.started_at,
+            duration: durationSeconds
+        };
+        batchRunsDataArray[index] = newData;
     });
+    console.log(batchRunsDataArray);
 }
 function calculateTimeDifferenceSecond(time1, time2) {
     const date1 = new Date(time1);
