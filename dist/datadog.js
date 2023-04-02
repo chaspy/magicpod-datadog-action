@@ -9,7 +9,7 @@ const datadog_api_client_1 = require("@datadog/datadog-api-client");
 const configuration = datadog_api_client_1.client.createConfiguration();
 const apiInstance = new datadog_api_client_1.v2.MetricsApi(configuration);
 function submitMetircs(timestamp, value, batch_run_number, test_setting_name, status, organization_name, project_name) {
-    const params = {
+    const durationSecondParams = {
         body: {
             series: [
                 {
@@ -33,11 +33,41 @@ function submitMetircs(timestamp, value, batch_run_number, test_setting_name, st
             ]
         }
     };
+    const countParams = {
+        body: {
+            series: [
+                {
+                    metric: 'custom.magicpod-datadog-action.batch_run.count',
+                    type: 3,
+                    points: [
+                        {
+                            timestamp: timestamp,
+                            value: 1
+                        }
+                    ],
+                    tags: [
+                        `batch_run_number:${batch_run_number}`,
+                        `test_setting_name:${test_setting_name}`,
+                        `status:${status}`,
+                        `organization_name:${organization_name}`,
+                        `project_name:${project_name}`
+                    ],
+                    unit: 'Count'
+                }
+            ]
+        }
+    };
     if (isTimestampAvailable(timestamp)) {
         apiInstance
-            .submitMetrics(params)
+            .submitMetrics(durationSecondParams)
             .then((data) => {
-            console.log('API called successfully.');
+            console.log('API called successfully. custom.magicpod-datadog-action.batch_run.count is submitted.');
+        })
+            .catch((error) => console.error(error));
+        apiInstance
+            .submitMetrics(countParams)
+            .then((data) => {
+            console.log('API called successfully. custom.magicpod-datadog-action.batch_run.count is submitted.');
         })
             .catch((error) => console.error(error));
     }
