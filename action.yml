@@ -14,5 +14,4 @@ outputs:
   issue:
     description: 'Created issue details'
 runs:
-  using: 'node
-
+  using: 'node'
