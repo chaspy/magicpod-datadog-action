@@ -41,14 +41,14 @@ function processBatchRunsData(batchRunsData) {
         const test_setting_name = batchRun.test_setting_name;
         const status = batchRun.status;
         const started_at = batchRun.started_at;
-        const timestamp = getUnixTimestamp(started_at);
-        (0, datadog_1.submitMetircs)(timestamp, durationSeconds, batch_run_number, test_setting_name, status);
+        const timestampSeconds = getUnixTimestampSeconds(started_at);
+        (0, datadog_1.submitMetircs)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status);
     });
 }
-function getUnixTimestamp(dateString) {
+function getUnixTimestampSeconds(dateString) {
     const dateObject = new Date(dateString);
     const unixTimestamp = dateObject.getTime();
-    return unixTimestamp;
+    return unixTimestamp / 1000; // seconds
 }
 function calculateTimeDifferenceSecond(time1, time2) {
     const date1 = new Date(time1);

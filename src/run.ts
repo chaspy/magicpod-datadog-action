@@ -77,10 +77,10 @@ function processBatchRunsData(batchRunsData: BatchRuns): void {
     const test_setting_name = batchRun.test_setting_name
     const status = batchRun.status
     const started_at = batchRun.started_at
-    const timestamp = getUnixTimestamp(started_at)
+    const timestampSeconds = getUnixTimestampSeconds(started_at)
 
     submitMetircs(
-      timestamp,
+      timestampSeconds,
       durationSeconds,
       batch_run_number,
       test_setting_name,
@@ -89,11 +89,11 @@ function processBatchRunsData(batchRunsData: BatchRuns): void {
   })
 }
 
-function getUnixTimestamp(dateString: string): number {
+function getUnixTimestampSeconds(dateString: string): number {
   const dateObject: Date = new Date(dateString)
   const unixTimestamp: number = dateObject.getTime()
 
-  return unixTimestamp
+  return unixTimestamp / 1000 // seconds
 }
 
 function calculateTimeDifferenceSecond(time1: string, time2: string): number {
