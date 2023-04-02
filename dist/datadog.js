@@ -48,14 +48,14 @@ exports.submitMetircs = submitMetircs;
 // points:
 // Timestamps should be in POSIX time in seconds,
 // and cannot be more than ten minutes in the future or more than one hour in the past.
-function isTimestampAvailable(unixTimestampMillis) {
-    const currentTime = Date.now();
-    const tenMinutesMillis = 10 * 60 * 1000;
-    const oneHourMillis = 60 * 60 * 1000;
-    if (unixTimestampMillis > currentTime + tenMinutesMillis) {
+function isTimestampAvailable(unixTimestampSeconds) {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const tenMinutes = 10 * 60;
+    const oneHour = 60 * 60;
+    if (unixTimestampSeconds > currentTime + tenMinutes) {
         return false; // 10 minutes in the future
     }
-    else if (unixTimestampMillis < currentTime - oneHourMillis) {
+    else if (unixTimestampSeconds < currentTime - oneHour) {
         return false; // one hour in the past
     }
     else {
