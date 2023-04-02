@@ -46,3 +46,7 @@ The action uses GET `/v1.0/batch_runs` API.
 ## Known Limitation
 
 The Datadog [Submit Metrics API](https://docs.datadoghq.com/api/latest/metrics/?code-lang=typescript#submit-metrics) cannot accept timestamps more than one hour in the past. Therefore, at least, this job must be run within an hour of the most recent test run. It is recommended to run this job once every 20 minutes, as multiple runs will not duplicate metrics.
+
+## How to test
+
+See [chaspy/magicpod-datadog-action-test](https://github.com/chaspy/magicpod-datadog-action-test)
