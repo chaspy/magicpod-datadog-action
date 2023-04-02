@@ -47,9 +47,7 @@ export function submitMetircs(
     apiInstance
       .submitMetrics(params)
       .then((data: v2.IntakePayloadAccepted) => {
-        console.log(
-          'API called successfully. Returned data: ' + JSON.stringify(data)
-        )
+        console.log('API called successfully.')
       })
       .catch((error: any) => console.error(error))
   } else {
