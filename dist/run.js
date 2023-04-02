@@ -22,7 +22,7 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     const magicpod_api_key = inputs.magicpod_api_key;
     const magicpod_organization_name = inputs.magicpod_organization_name;
     const magicpod_project_name = inputs.magicpod_project_name;
-    const count = 100;
+    const count = 10;
     (() => __awaiter(void 0, void 0, void 0, function* () {
         const data = yield getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count);
         if (data) {

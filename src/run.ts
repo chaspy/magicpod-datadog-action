@@ -48,7 +48,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   const magicpod_api_key = inputs.magicpod_api_key
   const magicpod_organization_name = inputs.magicpod_organization_name
   const magicpod_project_name = inputs.magicpod_project_name
-  const count = 100
+  const count = 10
 
   // Get response from magicpod
   ;(async () => {
