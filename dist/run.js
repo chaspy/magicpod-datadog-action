@@ -54,7 +54,15 @@ function processBatchRunsData(batchRunsData) {
         console.log(`      Unresolved: ${batchRun.test_cases.unresolved}`);
         console.log(`      Total: ${batchRun.test_cases.total}`);
         console.log(`    URL: ${batchRun.url}`);
+        const diff = calculateTimeDifferenceSecond(batchRun.started_at, batchRun.finished_at);
+        console.log(diff);
     });
+}
+function calculateTimeDifferenceSecond(time1, time2) {
+    const date1 = new Date(time1);
+    const date2 = new Date(time2);
+    const difference = Math.abs(date2.getTime() - date1.getTime()); // milli seconds
+    return difference / 1000; // seconds
 }
 function getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count) {
     return __awaiter(this, void 0, void 0, function* () {

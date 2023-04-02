@@ -89,7 +89,21 @@ function processBatchRunsData(batchRunsData: BatchRuns): void {
     console.log(`      Unresolved: ${batchRun.test_cases.unresolved}`)
     console.log(`      Total: ${batchRun.test_cases.total}`)
     console.log(`    URL: ${batchRun.url}`)
+    const diff = calculateTimeDifferenceSecond(
+      batchRun.started_at,
+      batchRun.finished_at
+    )
+    console.log(diff)
   })
+}
+
+function calculateTimeDifferenceSecond(time1: string, time2: string): number {
+  const date1 = new Date(time1)
+  const date2 = new Date(time2)
+
+  const difference = Math.abs(date2.getTime() - date1.getTime()) // milli seconds
+
+  return difference / 1000 // seconds
 }
 
 async function getBatchRuns(
