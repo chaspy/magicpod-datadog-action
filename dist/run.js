@@ -47,15 +47,17 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     const magicpod_organization_name = inputs.magicpod_organization_name;
     const magicpod_project_name = inputs.magicpod_project_name;
     const count = 100;
-    // Get response from magicpod
-    sendHttpRequest(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count);
+    () => __awaiter(void 0, void 0, void 0, function* () {
+        const data = yield getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count);
+        console.log(data);
+    });
     // parse response
     // calcurate duration
     // build metrics for datadog
     // send metric to datadog
 });
 exports.run = run;
-function sendHttpRequest(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count) {
+function getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`;
         const headers = {
@@ -65,9 +67,11 @@ function sendHttpRequest(magicpod_api_key, magicpod_organization_name, magicpod_
         try {
             const response = yield axios_1.default.get(url, { headers });
             console.log(response.data);
+            return response.data;
         }
         catch (error) {
             console.error(`Error: ${error}`);
+            return null;
         }
     });
 }

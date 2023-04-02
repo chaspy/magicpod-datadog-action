@@ -1,11 +1,34 @@
 import * as core from '@actions/core'
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 type Inputs = {
   dd_api_key: string
   magicpod_api_key: string
   magicpod_organization_name: string
   magicpod_project_name: string
+}
+
+interface TestCases {
+  succeeded: number
+  failed: number
+  aborted: number
+  unresolved: number
+  total: number
+}
+
+interface BatchRun {
+  batch_run_number: number
+  status: string
+  started_at: string
+  finished_at: string
+  test_cases: TestCases
+  url: string
+}
+
+interface BatchRuns {
+  organization_name: string
+  project_name: string
+  batch_runs: BatchRun[]
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -20,12 +43,15 @@ export const run = async (inputs: Inputs): Promise<void> => {
   const count = 100
 
   // Get response from magicpod
-  sendHttpRequest(
-    magicpod_api_key,
-    magicpod_organization_name,
-    magicpod_project_name,
-    count
-  )
+  ;async () => {
+    const data = await getBatchRuns(
+      magicpod_api_key,
+      magicpod_organization_name,
+      magicpod_project_name,
+      count
+    )
+    console.log(data)
+  }
 
   // parse response
 
@@ -36,12 +62,12 @@ export const run = async (inputs: Inputs): Promise<void> => {
   // send metric to datadog
 }
 
-async function sendHttpRequest(
+async function getBatchRuns(
   magicpod_api_key: string,
   magicpod_organization_name: string,
   magicpod_project_name: string,
   count: number
-) {
+): Promise<BatchRuns | null> {
   const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`
   const headers = {
     accept: 'application/json',
@@ -49,9 +75,11 @@ async function sendHttpRequest(
   }
 
   try {
-    const response = await axios.get(url, {headers})
+    const response: AxiosResponse<BatchRuns> = await axios.get(url, {headers})
     console.log(response.data)
+    return response.data
   } catch (error) {
     console.error(`Error: ${error}`)
+    return null
   }
 }
