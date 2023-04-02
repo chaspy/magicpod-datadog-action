@@ -42,3 +42,7 @@ This is an action to send metrics of MagicPod to Datadog.
 See [API Document](https://magic-pod.com/api/v1.0/doc/) for the details. (Models / BatchRun Section)
 
 The action uses GET `/v1.0/batch_runs` API.
+
+## Known Limitation
+
+The Datadog [Submit Metrics API](https://docs.datadoghq.com/api/latest/metrics/?code-lang=typescript#submit-metrics) cannot accept timestamps more than one hour in the past. Therefore, at least, this job must be run within an hour of the most recent test run. It is recommended to run this job once every 20 minutes, as multiple runs will not duplicate metrics.
