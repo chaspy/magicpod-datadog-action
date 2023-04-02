@@ -33,8 +33,6 @@ interface BatchRuns {
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const run = async (inputs: Inputs): Promise<void> => {
-  core.info('hello')
-
   // load insputs
   const dd_api_key = inputs.dd_api_key
   const magicpod_api_key = inputs.magicpod_api_key
@@ -43,15 +41,19 @@ export const run = async (inputs: Inputs): Promise<void> => {
   const count = 100
 
   // Get response from magicpod
-  ;async () => {
+  ;(async () => {
     const data = await getBatchRuns(
       magicpod_api_key,
       magicpod_organization_name,
       magicpod_project_name,
       count
     )
-    console.log(data)
-  }
+    if (data) {
+      console.log(data)
+    } else {
+      console.log('Error occurred, no data received')
+    }
+  })()
 
   // parse response
 
