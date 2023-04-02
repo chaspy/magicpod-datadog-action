@@ -39,7 +39,6 @@ export async function getBatchRuns(
 
   try {
     const response: AxiosResponse<BatchRuns> = await axios.get(url, {headers})
-    console.log(response.data)
     return response.data
   } catch (error) {
     console.error(`Error: ${error}`)
