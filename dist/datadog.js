@@ -61,7 +61,7 @@ function submitMetircs(timestamp, value, batch_run_number, test_setting_name, st
         apiInstance
             .submitMetrics(durationSecondParams)
             .then((data) => {
-            console.log('API called successfully. custom.magicpod-datadog-action.batch_run.count is submitted.');
+            console.log('API called successfully. custom.magicpod-datadog-action.batch_run.duration_second is submitted.');
         })
             .catch((error) => console.error(error));
         apiInstance
