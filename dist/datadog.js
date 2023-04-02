@@ -37,7 +37,7 @@ function submitMetircs(timestamp, value, batch_run_number, test_setting_name, st
         apiInstance
             .submitMetrics(params)
             .then((data) => {
-            console.log('API called successfully. Returned data: ' + JSON.stringify(data));
+            console.log('API called successfully.');
         })
             .catch((error) => console.error(error));
     }

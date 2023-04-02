@@ -24,7 +24,6 @@ function getBatchRuns(magicpod_api_token, magicpod_organization_name, magicpod_p
         };
         try {
             const response = yield axios_1.default.get(url, { headers });
-            console.log(response.data);
             return response.data;
         }
         catch (error) {
