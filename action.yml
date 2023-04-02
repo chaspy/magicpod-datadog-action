@@ -1,9 +1,6 @@
 name: 'magicpod-datadog-action'
 description: 'Send metrics of MagicPod to Datadog'
 inputs:
-  message:
-    description: 'Message to include in the issue'
-    required: true
   dd_api_token:
     description: 'Datadog API Token'
     required: true

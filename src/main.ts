@@ -3,7 +3,8 @@ import { run } from './run'
 
 const main = async (): Promise<void> => {
   await run({
-    message: core.getInput('message', { required: true }),
+    dd_api_key: core.getInput('dd_api_key', { required: true }),
+    magicpod_api_key: core.getInput('magicpod_api_key', { required: true }),
   })
 }
 
