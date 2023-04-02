@@ -15,4 +15,4 @@ outputs:
     description: 'Created issue details'
 runs:
   using: 'node16'
-  main: 'dist/main.ts'
+  main: 'dist/main.js'
