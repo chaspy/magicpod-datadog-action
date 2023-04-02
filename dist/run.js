@@ -16,7 +16,7 @@ exports.run = void 0;
 const axios_1 = __importDefault(require("axios"));
 // eslint-disable-next-line @typescript-eslint/require-await
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
-    // load insputs
+    // Load insputs
     const dd_api_key = inputs.dd_api_key;
     const magicpod_api_key = inputs.magicpod_api_key;
     const magicpod_organization_name = inputs.magicpod_organization_name;
@@ -25,7 +25,7 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     (() => __awaiter(void 0, void 0, void 0, function* () {
         const data = yield getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count);
         if (data) {
-            console.log(data);
+            processBatchRunsData(data);
         }
         else {
             console.log('Error occurred, no data received');
@@ -37,6 +37,25 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     // send metric to datadog
 });
 exports.run = run;
+function processBatchRunsData(batchRunsData) {
+    console.log(`Organization Name: ${batchRunsData.organization_name}`);
+    console.log(`Project Name: ${batchRunsData.project_name}`);
+    console.log('Batch Runs:');
+    batchRunsData.batch_runs.forEach((batchRun, index) => {
+        console.log(`  Batch Run #${index + 1}`);
+        console.log(`    Batch Run Number: ${batchRun.batch_run_number}`);
+        console.log(`    Status: ${batchRun.status}`);
+        console.log(`    Started At: ${batchRun.started_at}`);
+        console.log(`    Finished At: ${batchRun.finished_at}`);
+        console.log(`    Test Cases:`);
+        console.log(`      Succeeded: ${batchRun.test_cases.succeeded}`);
+        console.log(`      Failed: ${batchRun.test_cases.failed}`);
+        console.log(`      Aborted: ${batchRun.test_cases.aborted}`);
+        console.log(`      Unresolved: ${batchRun.test_cases.unresolved}`);
+        console.log(`      Total: ${batchRun.test_cases.total}`);
+        console.log(`    URL: ${batchRun.url}`);
+    });
+}
 function getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`;
