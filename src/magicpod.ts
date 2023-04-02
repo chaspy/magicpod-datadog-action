@@ -29,9 +29,9 @@ export async function getBatchRuns(
   magicpod_api_token: string,
   magicpod_organization_name: string,
   magicpod_project_name: string,
-  count: number
+  magicpod_record_count: string
 ): Promise<BatchRuns | null> {
-  const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`
+  const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${magicpod_record_count}`
   const headers = {
     accept: 'application/json',
     Authorization: `Token ${magicpod_api_token}`

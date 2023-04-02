@@ -4,6 +4,7 @@ type Inputs = {
   magicpod_api_token: string
   magicpod_organization_name: string
   magicpod_project_name: string
+  magicpod_record_count: string
 }
 
 // eslint-disable-next-line @typescript-eslint/require-await
@@ -12,7 +13,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   const magicpod_api_token = inputs.magicpod_api_token
   const magicpod_organization_name = inputs.magicpod_organization_name
   const magicpod_project_name = inputs.magicpod_project_name
-  const count = 10
+  const magicpod_record_count = inputs.magicpod_record_count
 
   // Get response from magicpod
   ;(async () => {
@@ -20,7 +21,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
       magicpod_api_token,
       magicpod_organization_name,
       magicpod_project_name,
-      count
+      magicpod_record_count
     )
     if (data) {
       processBatchRunsData(data)

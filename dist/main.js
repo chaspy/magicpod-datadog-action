@@ -42,6 +42,9 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         }),
         magicpod_project_name: core.getInput('magicpod_project_name', {
             required: true
+        }),
+        magicpod_record_count: core.getInput('magicpod_record_count', {
+            required: false
         })
     });
 });

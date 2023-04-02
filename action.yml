@@ -13,6 +13,10 @@ inputs:
   magicpod_project_name:
     description: 'MagicPod Organization Name'
     required: true
+  magicpod_record_count:
+    description: 'MagicPod recort count to retrive BatchRun'
+    required: false
+    default: '20'
 runs:
   using: 'node16'
   main: 'dist/index.js'

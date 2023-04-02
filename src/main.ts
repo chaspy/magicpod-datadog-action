@@ -9,6 +9,9 @@ const main = async (): Promise<void> => {
     }),
     magicpod_project_name: core.getInput('magicpod_project_name', {
       required: true
+    }),
+    magicpod_record_count: core.getInput('magicpod_record_count', {
+      required: false
     })
   })
 }
