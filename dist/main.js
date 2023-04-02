@@ -36,7 +36,6 @@ const core = __importStar(require("@actions/core"));
 const run_1 = require("./run");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, run_1.run)({
-        dd_api_key: core.getInput('dd_api_key', { required: true }),
         magicpod_api_key: core.getInput('magicpod_api_key', { required: true }),
         magicpod_organization_name: core.getInput('magicpod_organization_name', {
             required: true

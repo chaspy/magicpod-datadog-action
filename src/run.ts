@@ -3,7 +3,6 @@ import axios, {AxiosResponse} from 'axios'
 import {submitMetircs} from './datadog'
 
 type Inputs = {
-  dd_api_key: string
   magicpod_api_key: string
   magicpod_organization_name: string
   magicpod_project_name: string
@@ -44,9 +43,6 @@ interface BatchRunsData {
 // eslint-disable-next-line @typescript-eslint/require-await
 export const run = async (inputs: Inputs): Promise<void> => {
   // Load insputs
-  const dd_api_key = inputs.dd_api_key
-  process.env.DD_API_KEY = dd_api_key
-
   const magicpod_api_key = inputs.magicpod_api_key
   const magicpod_organization_name = inputs.magicpod_organization_name
   const magicpod_project_name = inputs.magicpod_project_name
