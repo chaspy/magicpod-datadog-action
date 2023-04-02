@@ -14,7 +14,9 @@ export function submitMetircs(
   value: number,
   batch_run_number: number,
   test_setting_name: string,
-  status: string
+  status: string,
+  organization_name: string,
+  project_name: string
 ) {
   const params: v2.MetricsApiSubmitMetricsRequest = {
     body: {
@@ -31,7 +33,9 @@ export function submitMetircs(
           tags: [
             `batch_run_number:${batch_run_number}`,
             `test_setting_name:${test_setting_name}`,
-            `status:${status}`
+            `status:${status}`,
+            `organization_name:${organization_name}`,
+            `project_name:${project_name}`
           ],
           unit: 'Second'
         }

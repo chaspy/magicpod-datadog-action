@@ -56,6 +56,9 @@ export const run = async (inputs: Inputs): Promise<void> => {
 }
 
 function processBatchRunsData(batchRunsData: BatchRuns): void {
+  const organization_name = batchRunsData.organization_name
+  const project_name = batchRunsData.project_name
+
   batchRunsData.batch_runs.forEach((batchRun, index) => {
     const durationSeconds = calculateTimeDifferenceSecond(
       batchRun.started_at,
@@ -73,7 +76,9 @@ function processBatchRunsData(batchRunsData: BatchRuns): void {
       durationSeconds,
       batch_run_number,
       test_setting_name,
-      status
+      status,
+      organization_name,
+      project_name
     )
   })
 }

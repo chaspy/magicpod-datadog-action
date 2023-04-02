@@ -8,7 +8,7 @@ exports.submitMetircs = void 0;
 const datadog_api_client_1 = require("@datadog/datadog-api-client");
 const configuration = datadog_api_client_1.client.createConfiguration();
 const apiInstance = new datadog_api_client_1.v2.MetricsApi(configuration);
-function submitMetircs(timestamp, value, batch_run_number, test_setting_name, status) {
+function submitMetircs(timestamp, value, batch_run_number, test_setting_name, status, organization_name, project_name) {
     const params = {
         body: {
             series: [
@@ -24,7 +24,9 @@ function submitMetircs(timestamp, value, batch_run_number, test_setting_name, st
                     tags: [
                         `batch_run_number:${batch_run_number}`,
                         `test_setting_name:${test_setting_name}`,
-                        `status:${status}`
+                        `status:${status}`,
+                        `organization_name:${organization_name}`,
+                        `project_name:${project_name}`
                     ],
                     unit: 'Second'
                 }

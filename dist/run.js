@@ -34,6 +34,8 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.run = run;
 function processBatchRunsData(batchRunsData) {
+    const organization_name = batchRunsData.organization_name;
+    const project_name = batchRunsData.project_name;
     batchRunsData.batch_runs.forEach((batchRun, index) => {
         const durationSeconds = calculateTimeDifferenceSecond(batchRun.started_at, batchRun.finished_at);
         const batch_run_number = batchRun.batch_run_number;
@@ -41,7 +43,7 @@ function processBatchRunsData(batchRunsData) {
         const status = batchRun.status;
         const started_at = batchRun.started_at;
         const timestampSeconds = getUnixTimestampSeconds(started_at);
-        (0, datadog_1.submitMetircs)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status);
+        (0, datadog_1.submitMetircs)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status, organization_name, project_name);
     });
 }
 function getUnixTimestampSeconds(dateString) {
