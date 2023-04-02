@@ -10,8 +10,8 @@ export const run = async (inputs: Inputs): Promise<void> => {
   core.info('hello')
 
   // load inputs
-  // MAGICPOD_API_KEY
-  // DD_API_KEY
+  const dd_api_key = inputs.dd_api_key
+  const magicpod_api_key = inputs.magicpod_api_key
 
   // Get response from magicpod
 
