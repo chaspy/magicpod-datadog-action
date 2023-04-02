@@ -73,7 +73,7 @@ export function submitMetircs(
       .submitMetrics(durationSecondParams)
       .then((data: v2.IntakePayloadAccepted) => {
         console.log(
-          'API called successfully. custom.magicpod-datadog-action.batch_run.count is submitted.'
+          'API called successfully. custom.magicpod-datadog-action.batch_run.duration_second is submitted.'
         )
       })
       .catch((error: any) => console.error(error))
