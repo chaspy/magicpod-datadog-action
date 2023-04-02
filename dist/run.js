@@ -18,12 +18,12 @@ const datadog_1 = require("./datadog");
 // eslint-disable-next-line @typescript-eslint/require-await
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
     // Load insputs
-    const magicpod_api_key = inputs.magicpod_api_key;
+    const magicpod_api_token = inputs.magicpod_api_token;
     const magicpod_organization_name = inputs.magicpod_organization_name;
     const magicpod_project_name = inputs.magicpod_project_name;
     const count = 10;
     (() => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count);
+        const data = yield getBatchRuns(magicpod_api_token, magicpod_organization_name, magicpod_project_name, count);
         if (data) {
             processBatchRunsData(data);
         }
@@ -34,7 +34,6 @@ const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.run = run;
 function processBatchRunsData(batchRunsData) {
-    let batchRunsDataArray = [];
     batchRunsData.batch_runs.forEach((batchRun, index) => {
         const durationSeconds = calculateTimeDifferenceSecond(batchRun.started_at, batchRun.finished_at);
         const batch_run_number = batchRun.batch_run_number;
@@ -56,12 +55,12 @@ function calculateTimeDifferenceSecond(time1, time2) {
     const difference = Math.abs(date2.getTime() - date1.getTime()); // milli seconds
     return difference / 1000; // seconds
 }
-function getBatchRuns(magicpod_api_key, magicpod_organization_name, magicpod_project_name, count) {
+function getBatchRuns(magicpod_api_token, magicpod_organization_name, magicpod_project_name, count) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`;
         const headers = {
             accept: 'application/json',
-            Authorization: `Token ${magicpod_api_key}`
+            Authorization: `Token ${magicpod_api_token}`
         };
         try {
             const response = yield axios_1.default.get(url, { headers });

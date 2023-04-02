@@ -13,9 +13,6 @@ inputs:
   magicpod_project_name:
     description: 'MagicPod Organization Name'
     required: true
-outputs:
-  issue:
-    description: 'Created issue details'
 runs:
   using: 'node16'
   main: 'dist/index.js'

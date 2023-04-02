@@ -1,9 +1,8 @@
-import * as core from '@actions/core'
 import axios, {AxiosResponse} from 'axios'
 import {submitMetircs} from './datadog'
 
 type Inputs = {
-  magicpod_api_key: string
+  magicpod_api_token: string
   magicpod_organization_name: string
   magicpod_project_name: string
 }
@@ -32,18 +31,10 @@ interface BatchRuns {
   batch_runs: BatchRun[]
 }
 
-interface BatchRunsData {
-  batch_run_number: number
-  test_setting_name: string
-  status: string
-  started_at: string
-  duration_seconds: number // second
-}
-
 // eslint-disable-next-line @typescript-eslint/require-await
 export const run = async (inputs: Inputs): Promise<void> => {
   // Load insputs
-  const magicpod_api_key = inputs.magicpod_api_key
+  const magicpod_api_token = inputs.magicpod_api_token
   const magicpod_organization_name = inputs.magicpod_organization_name
   const magicpod_project_name = inputs.magicpod_project_name
   const count = 10
@@ -51,7 +42,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   // Get response from magicpod
   ;(async () => {
     const data = await getBatchRuns(
-      magicpod_api_key,
+      magicpod_api_token,
       magicpod_organization_name,
       magicpod_project_name,
       count
@@ -65,8 +56,6 @@ export const run = async (inputs: Inputs): Promise<void> => {
 }
 
 function processBatchRunsData(batchRunsData: BatchRuns): void {
-  let batchRunsDataArray: BatchRunsData[] = []
-
   batchRunsData.batch_runs.forEach((batchRun, index) => {
     const durationSeconds = calculateTimeDifferenceSecond(
       batchRun.started_at,
@@ -106,7 +95,7 @@ function calculateTimeDifferenceSecond(time1: string, time2: string): number {
 }
 
 async function getBatchRuns(
-  magicpod_api_key: string,
+  magicpod_api_token: string,
   magicpod_organization_name: string,
   magicpod_project_name: string,
   count: number
@@ -114,7 +103,7 @@ async function getBatchRuns(
   const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${count}`
   const headers = {
     accept: 'application/json',
-    Authorization: `Token ${magicpod_api_key}`
+    Authorization: `Token ${magicpod_api_token}`
   }
 
   try {
