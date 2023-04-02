@@ -1,0 +1,20 @@
+{
+  "name": "magicpod-datadog-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaspy/magicpod-datadog-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaspy/magicpod-datadog-action/issues"
+  },
+  "homepage": "https://github.com/chaspy/magicpod-datadog-action#readme"
+}
