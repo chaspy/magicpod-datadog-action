@@ -25,7 +25,7 @@ This is an action to send metrics of MagicPod to Datadog.
 
 | Name                       | Description                                                        | Required |
 | -------------------------- | ------------------------------------------------------------------ | -------- |
-| magicpod_api_token         | [MagicPod API Token](https://app.magicpod.com/accounts/api-token/) | yes      |
+| magicpod_api_token         | [MagicPod API Token](https://app.magicpod.com/accounts/api-token/) | Yes      |
 | magicpod_organization_name | MagicPod Organization Name                                         | Yes      |
 | magicpod_project_name      | MagicPod Project Name                                              | Yes      |
 
