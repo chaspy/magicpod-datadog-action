@@ -28,7 +28,7 @@ This is an action to send metrics of MagicPod to Datadog.
 | magicpod_api_token         | [MagicPod API Token](https://app.magicpod.com/accounts/api-token/)               | Yes      |         |
 | magicpod_organization_name | MagicPod Organization Name                                                       | Yes      |         |
 | magicpod_project_name      | MagicPod Project Name                                                            | Yes      |         |
-| count                      | `count` query parameter of [BatchRuns API](https://magic-pod.com/api/v1.0/doc/). | No       | 20      |
+| magicpod_record_count      | `count` query parameter of [BatchRuns API](https://magic-pod.com/api/v1.0/doc/). | No       | 20      |
 
 ## Metrics
 
