@@ -18,7 +18,7 @@ export function submitMetircs(
   organization_name: string,
   project_name: string
 ) {
-  const params: v2.MetricsApiSubmitMetricsRequest = {
+  const durationSecondParams: v2.MetricsApiSubmitMetricsRequest = {
     body: {
       series: [
         {
@@ -43,11 +43,47 @@ export function submitMetircs(
     }
   }
 
+  const countParams: v2.MetricsApiSubmitMetricsRequest = {
+    body: {
+      series: [
+        {
+          metric: 'custom.magicpod-datadog-action.batch_run.count',
+          type: 3, // gauge
+          points: [
+            {
+              timestamp: timestamp,
+              value: 1
+            }
+          ],
+          tags: [
+            `batch_run_number:${batch_run_number}`,
+            `test_setting_name:${test_setting_name}`,
+            `status:${status}`,
+            `organization_name:${organization_name}`,
+            `project_name:${project_name}`
+          ],
+          unit: 'Count'
+        }
+      ]
+    }
+  }
+
   if (isTimestampAvailable(timestamp)) {
     apiInstance
-      .submitMetrics(params)
+      .submitMetrics(durationSecondParams)
       .then((data: v2.IntakePayloadAccepted) => {
-        console.log('API called successfully.')
+        console.log(
+          'API called successfully. custom.magicpod-datadog-action.batch_run.duration_second is submitted.'
+        )
+      })
+      .catch((error: any) => console.error(error))
+
+    apiInstance
+      .submitMetrics(countParams)
+      .then((data: v2.IntakePayloadAccepted) => {
+        console.log(
+          'API called successfully. custom.magicpod-datadog-action.batch_run.count is submitted.'
+        )
       })
       .catch((error: any) => console.error(error))
   } else {
