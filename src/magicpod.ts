@@ -89,3 +89,9 @@ function calculateTimeDifferenceSecond(time1: string, time2: string): number {
 
   return difference / 1000 // seconds
 }
+
+// getButchRuns API returns all BatchRuns includes Running Status.
+// However, 'Running' ones are useless because we want to store success rates and success results in Datadog.
+export function isStatusRunning(status: string): boolean {
+  return status == 'Running' ? true : false
+}

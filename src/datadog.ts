@@ -5,7 +5,7 @@
 // https://docs.datadoghq.com/ja/api/latest/metrics/#submit-metrics
 
 import {client, v2} from '@datadog/datadog-api-client'
-
+import {isStatusRunning} from './magicpod'
 const configuration = client.createConfiguration()
 const apiInstance = new v2.MetricsApi(configuration)
 
@@ -68,7 +68,7 @@ export function submitMetircs(
     }
   }
 
-  if (isTimestampAvailable(timestamp)) {
+  if (isTimestampAvailable(timestamp) && !isStatusRunning(status)) {
     apiInstance
       .submitMetrics(durationSecondParams)
       .then((data: v2.IntakePayloadAccepted) => {
