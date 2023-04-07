@@ -6,7 +6,6 @@
     {
       "matchManagers": ["npm"],
       "automerge": true
-      ]
     }
   ]
 }
