@@ -1,5 +1,11 @@
 {
   "extends": ["config:base"],
   "enabledManagers": ["npm", "github-actions"],
-  "labels": ["r:{{depName}}", "r:{{depName}}/{{newVersion}}"]
+  "labels": ["r:{{depName}}", "r:{{depName}}/{{newVersion}}"],
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "automerge": true
+    }
+  ]
 }
