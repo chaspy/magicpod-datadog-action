@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processBatchRunsData = exports.getBatchRuns = void 0;
+exports.isStatusRunning = exports.processBatchRunsData = exports.getBatchRuns = void 0;
 const axios_1 = __importDefault(require("axios"));
 const datadog_1 = require("./datadog");
 function getBatchRuns(magicpod_api_token, magicpod_organization_name, magicpod_project_name, magicpod_record_count) {
@@ -58,3 +58,9 @@ function calculateTimeDifferenceSecond(time1, time2) {
     const difference = Math.abs(date2.getTime() - date1.getTime()); // milli seconds
     return difference / 1000; // seconds
 }
+// getButchRuns API returns all BatchRuns includes Running Status.
+// However, 'Running' ones are useless because we want to store success rates and success results in Datadog.
+function isStatusRunning(status) {
+    return status == 'Running' ? true : false;
+}
+exports.isStatusRunning = isStatusRunning;
