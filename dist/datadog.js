@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.submitMetircs = void 0;
 // https://docs.datadoghq.com/ja/api/latest/metrics/#submit-metrics
 const datadog_api_client_1 = require("@datadog/datadog-api-client");
+const magicpod_1 = require("./magicpod");
 const configuration = datadog_api_client_1.client.createConfiguration();
 const apiInstance = new datadog_api_client_1.v2.MetricsApi(configuration);
 function submitMetircs(timestamp, value, batch_run_number, test_setting_name, status, organization_name, project_name) {
@@ -57,7 +58,7 @@ function submitMetircs(timestamp, value, batch_run_number, test_setting_name, st
             ]
         }
     };
-    if (isTimestampAvailable(timestamp)) {
+    if (isTimestampAvailable(timestamp) && !(0, magicpod_1.isStatusRunning)(status)) {
         apiInstance
             .submitMetrics(durationSecondParams)
             .then((data) => {
