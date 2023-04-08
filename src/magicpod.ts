@@ -111,3 +111,24 @@ function calculateTimeDifferenceSecond(time1: string, time2: string): number {
 export function isStatusRunning(status: string): boolean {
   return status == 'running' ? true : false
 }
+
+export async function getBatchRun(
+  magicpod_api_token: string,
+  magicpod_organization_name: string,
+  magicpod_project_name: string,
+  batch_run_number: number
+): Promise<BatchRuns | null> {
+  const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-run/${batch_run_number}`
+  const headers = {
+    accept: 'application/json',
+    Authorization: `Token ${magicpod_api_token}`
+  }
+
+  try {
+    const response: AxiosResponse<BatchRuns> = await axios.get(url, {headers})
+    return response.data
+  } catch (error) {
+    console.error(`Error: ${error}`)
+    return null
+  }
+}
