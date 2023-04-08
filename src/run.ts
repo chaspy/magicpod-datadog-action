@@ -1,4 +1,4 @@
-import {getBatchRuns, processBatchRunsData} from './magicpod'
+import {getBatchRuns, getBatchRun, processBatchRunsData} from './magicpod'
 
 type Inputs = {
   magicpod_api_token: string
@@ -25,6 +25,15 @@ export const run = async (inputs: Inputs): Promise<void> => {
     )
     if (data) {
       processBatchRunsData(data)
+
+      // Get BatchRun Details foreach data
+      // for each data.batch_numbers
+      // const batchRunData = await getBatchRun(
+      // magicpod_api_token,
+      // magicpod_organization_name,
+      // magicpod_project_name,
+      // data.
+      // )
     } else {
       console.log('Error occurred, no data received')
     }
