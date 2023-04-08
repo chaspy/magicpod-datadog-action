@@ -73,6 +73,8 @@ export function processBatchRunsData(batchRunsData: BatchRuns): void {
     )
 
     const batch_run_number = batchRun.batch_run_number
+    // Call get BatchRun API for details
+
     const test_setting_name = batchRun.test_setting_name
     const status = batchRun.status
     const finished_at = batchRun.finished_at
