@@ -25,6 +25,22 @@ interface TestCases {
   total: number
 }
 
+interface Details {
+  pattern_name: string
+  included_labels: string
+  excluded_labels: string
+  results: Results
+}
+
+interface Results {
+  order: number
+  number: number
+  status: string
+  started_at: string
+  finished_at: string
+  // data_patterns	[...]
+}
+
 export async function getBatchRuns(
   magicpod_api_token: string,
   magicpod_organization_name: string,
