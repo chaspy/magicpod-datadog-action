@@ -59,8 +59,8 @@ export function processBatchRunsData(batchRunsData: BatchRuns): void {
     const batch_run_number = batchRun.batch_run_number
     const test_setting_name = batchRun.test_setting_name
     const status = batchRun.status
-    const started_at = batchRun.started_at
-    const timestampSeconds = getUnixTimestampSeconds(started_at)
+    const finished_at = batchRun.finished_at
+    const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
     submitMetircs(
       timestampSeconds,
