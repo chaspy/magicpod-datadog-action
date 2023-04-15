@@ -9,7 +9,7 @@ import {isStatusRunning} from './magicpod'
 const configuration = client.createConfiguration()
 const apiInstance = new v2.MetricsApi(configuration)
 
-export function submitMetircs(
+export function submitBstchRunsMetircs(
   timestamp: number,
   value: number,
   batch_run_number: number,

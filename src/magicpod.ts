@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {submitMetircs} from './datadog'
+import {submitBstchRunsMetircs} from './datadog'
 
 export type Inputs = {
   magicpod_api_token: string
@@ -71,7 +71,10 @@ export async function getBatchRuns(inputs: Inputs): Promise<BatchRuns | null> {
   }
 }
 
-export function processBatchRunsData(batchRunsData: BatchRuns): void {
+export function processBatchRunsData(
+  batchRunsData: BatchRuns,
+  inputs: Inputs
+): void {
   const organization_name = batchRunsData.organization_name
   const project_name = batchRunsData.project_name
 
@@ -83,6 +86,14 @@ export function processBatchRunsData(batchRunsData: BatchRuns): void {
 
     const batch_run_number = batchRun.batch_run_number
     // Call get BatchRun API for details
+    ;(async () => {
+      const data = await getBatchRuns(inputs)
+      if (data) {
+        processBatchRunData(data)
+      } else {
+        console.log('Error occurred, no data received')
+      }
+    })()
 
     const test_setting_name = batchRun.test_setting_name
     const status = batchRun.status
@@ -90,6 +101,35 @@ export function processBatchRunsData(batchRunsData: BatchRuns): void {
     const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
     submitMetircs(
+      timestampSeconds,
+      durationSeconds,
+      batch_run_number,
+      test_setting_name,
+      status,
+      organization_name,
+      project_name
+    )
+  })
+}
+
+export function processBatchRunData(batchRunsData: BatchRuns): void {
+  const organization_name = batchRunsData.organization_name
+  const project_name = batchRunsData.project_name
+
+  batchRunsData.batch_runs.forEach((batchRun, index) => {
+    const durationSeconds = calculateTimeDifferenceSecond(
+      batchRun.started_at,
+      batchRun.finished_at
+    )
+
+    const batch_run_number = batchRun.batch_run_number
+
+    const test_setting_name = batchRun.test_setting_name
+    const status = batchRun.status
+    const finished_at = batchRun.finished_at
+    const timestampSeconds = getUnixTimestampSeconds(finished_at)
+
+    submitBstchRunsMetircs(
       timestampSeconds,
       durationSeconds,
       batch_run_number,
