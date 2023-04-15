@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {submitBatchRunsMetircs} from './datadog'
+import {submitBatchRunMetircs, submitBatchRunsMetircs} from './datadog'
 
 export type Inputs = {
   magicpod_api_token: string
@@ -15,6 +15,8 @@ interface BatchRuns {
 }
 
 interface BatchRun {
+  organization_name: string
+  project_name: string
   batch_run_number: number
   test_setting_name: string
   status: string
@@ -30,17 +32,17 @@ interface TestCases {
   aborted: number
   unresolved: number
   total: number
-  details: Details[]
+  details: Detail[]
 }
 
-interface Details {
+interface Detail {
   pattern_name: string
   included_labels: string
   excluded_labels: string
-  results: Results[]
+  results: Result[]
 }
 
-interface Results {
+interface Result {
   order: number
   number: number
   status: string
@@ -87,7 +89,7 @@ export function processBatchRunsData(
     const batch_run_number = batchRun.batch_run_number
     // Call get BatchRun API for details
     ;(async () => {
-      const data = await getBatchRuns(inputs)
+      const data = await getBatchRun(inputs)
       if (data) {
         processBatchRunData(data)
       } else {
@@ -112,32 +114,43 @@ export function processBatchRunsData(
   })
 }
 
-export function processBatchRunData(batchRunsData: BatchRuns): void {
-  const organization_name = batchRunsData.organization_name
-  const project_name = batchRunsData.project_name
+export function processBatchRunData(batchRunData: BatchRun): void {
+  const organization_name = batchRunData.organization_name
+  const project_name = batchRunData.project_name
+  const batch_run_number = batchRunData.batch_run_number
+  const test_setting_name = batchRunData.test_setting_name
 
-  batchRunsData.batch_runs.forEach((batchRun, index) => {
-    const durationSeconds = calculateTimeDifferenceSecond(
-      batchRun.started_at,
-      batchRun.finished_at
-    )
+  batchRunData.test_cases.details.forEach((details, index) => {
+    const pattern_name = details.pattern_name
 
-    const batch_run_number = batchRun.batch_run_number
+    details.results.forEach((results, index) => {
+      const durationSeconds = calculateTimeDifferenceSecond(
+        results.started_at,
+        results.finished_at
+      )
 
-    const test_setting_name = batchRun.test_setting_name
-    const status = batchRun.status
-    const finished_at = batchRun.finished_at
-    const timestampSeconds = getUnixTimestampSeconds(finished_at)
+      const finished_at = results.finished_at
+      const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
-    submitBatchRunMetircs(
-      timestampSeconds,
-      durationSeconds,
-      batch_run_number,
-      test_setting_name,
-      status,
-      organization_name,
-      project_name
-    )
+      // const pattern_name = batchRunData.test_cases.details
+
+      const status = results.status
+      const order = results.order
+      const number = results.number
+
+      submitBatchRunMetircs(
+        timestampSeconds,
+        durationSeconds,
+        batch_run_number,
+        test_setting_name,
+        status,
+        organization_name,
+        project_name,
+        pattern_name,
+        order,
+        number
+      )
+    })
   })
 }
 

@@ -6,7 +6,7 @@ export const run = async (inputs: Inputs): Promise<void> => {
   ;(async () => {
     const data = await getBatchRuns(inputs)
     if (data) {
-      processBatchRunsData(data)
+      processBatchRunsData(data, inputs)
     } else {
       console.log('Error occurred, no data received')
     }

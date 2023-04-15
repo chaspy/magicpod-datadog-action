@@ -101,13 +101,16 @@ export function submitBatchRunMetircs(
   test_setting_name: string,
   status: string,
   organization_name: string,
-  project_name: string
+  project_name: string,
+  pattern_name: string,
+  order: number,
+  number: number
 ) {
   const durationSecondParams: v2.MetricsApiSubmitMetricsRequest = {
     body: {
       series: [
         {
-          metric: 'custom.magicpod-datadog-action.batch_run.duration_second',
+          metric: 'custom.magicpod-datadog-action.test_case.duration_second',
           type: 3, // gauge
           points: [
             {
@@ -120,7 +123,10 @@ export function submitBatchRunMetircs(
             `test_setting_name:${test_setting_name}`,
             `status:${status}`,
             `organization_name:${organization_name}`,
-            `project_name:${project_name}`
+            `project_name:${project_name}`,
+            `pattern_name:${pattern_name}`,
+            `order:${order}`,
+            `number:${number}`
           ],
           unit: 'Second'
         }
@@ -132,7 +138,7 @@ export function submitBatchRunMetircs(
     body: {
       series: [
         {
-          metric: 'custom.magicpod-datadog-action.batch_run.count',
+          metric: 'custom.magicpod-datadog-action.test_case.count',
           type: 3, // gauge
           points: [
             {
@@ -145,7 +151,10 @@ export function submitBatchRunMetircs(
             `test_setting_name:${test_setting_name}`,
             `status:${status}`,
             `organization_name:${organization_name}`,
-            `project_name:${project_name}`
+            `project_name:${project_name}`,
+            `pattern_name:${pattern_name}`,
+            `order:${order}`,
+            `number:${number}`
           ],
           unit: 'Count'
         }
