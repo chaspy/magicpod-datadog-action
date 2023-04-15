@@ -185,6 +185,9 @@ export function submitBatchRunMetircs(
       .catch((error: any) => console.error(error))
   } else {
     console.log(`timestamp ${timestamp} is not available. skip to send metrics`)
+    console.log(
+      `info: timestamp: ${timestamp}, project_name: ${project_name}, test_setting_name: ${test_setting_name}, status: ${status}, value: ${value}, pattern_name:${pattern_name}, order:${order}, number:${number}`
+    )
   }
 }
 
