@@ -20,10 +20,10 @@ git add .
 git commit -m 'compile'
 
 # 新しいタグをローカルに作成
-git tag $new_tag
+git tag "${new_tag}"
 
 # 新しいタグをリモートリポジトリにプッシュ
-git push origin $new_tag
+git push origin "${new_tag}"
 
 # GitHub の API を使ってリリースを作成
 # GITHUB_TOKEN は環境変数として設定するか、直接スクリプトに記述してください
