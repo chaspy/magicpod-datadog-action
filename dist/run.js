@@ -13,15 +13,12 @@ exports.run = void 0;
 const magicpod_1 = require("./magicpod");
 // eslint-disable-next-line @typescript-eslint/require-await
 const run = (inputs) => __awaiter(void 0, void 0, void 0, function* () {
-    // Load insputs
-    const magicpod_api_token = inputs.magicpod_api_token;
-    const magicpod_organization_name = inputs.magicpod_organization_name;
-    const magicpod_project_name = inputs.magicpod_project_name;
-    const magicpod_record_count = inputs.magicpod_record_count;
+    // Get response from magicpod
+    ;
     (() => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield (0, magicpod_1.getBatchRuns)(magicpod_api_token, magicpod_organization_name, magicpod_project_name, magicpod_record_count);
+        const data = yield (0, magicpod_1.getBatchRuns)(inputs);
         if (data) {
-            (0, magicpod_1.processBatchRunsData)(data);
+            (0, magicpod_1.processBatchRunsData)(data, inputs);
         }
         else {
             console.log('Error occurred, no data received');
