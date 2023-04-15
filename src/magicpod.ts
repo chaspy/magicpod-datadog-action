@@ -89,7 +89,7 @@ export function processBatchRunsData(
     const batch_run_number = batchRun.batch_run_number
     // Call get BatchRun API for details
     ;(async () => {
-      const data = await getBatchRun(inputs)
+      const data = await getBatchRun(inputs, batch_run_number)
       if (data) {
         processBatchRunData(data)
       } else {
@@ -176,7 +176,10 @@ export function isStatusRunning(status: string): boolean {
   return status == 'running' ? true : false
 }
 
-export async function getBatchRun(inputs: Inputs): Promise<BatchRun | null> {
+export async function getBatchRun(
+  inputs: Inputs,
+  batch_run_number: number
+): Promise<BatchRun | null> {
   // Load insputs
   const magicpod_api_token = inputs.magicpod_api_token
   const magicpod_organization_name = inputs.magicpod_organization_name
