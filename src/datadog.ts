@@ -69,6 +69,9 @@ export function submitMetircs(
   }
 
   if (isTimestampAvailable(timestamp) && !isStatusRunning(status)) {
+    console.log(
+      `info: timestamp: ${timestamp}, project_name: ${project_name}, test_setting_name: ${test_setting_name}, status: ${status}, value: ${value}`
+    )
     apiInstance
       .submitMetrics(durationSecondParams)
       .then((data: v2.IntakePayloadAccepted) => {
