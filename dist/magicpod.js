@@ -57,7 +57,7 @@ function processBatchRunsData(batchRunsData, inputs) {
         const status = batchRun.status;
         const finished_at = batchRun.finished_at;
         const timestampSeconds = getUnixTimestampSeconds(finished_at);
-        (0, datadog_1.submitBatchRunsMetircs)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status, organization_name, project_name);
+        (0, datadog_1.submitBatchRunsMetrics)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status, organization_name, project_name);
     });
 }
 exports.processBatchRunsData = processBatchRunsData;
@@ -76,7 +76,7 @@ function processBatchRunData(batchRunData) {
             const status = results.status;
             const order = results.order;
             const number = results.number;
-            (0, datadog_1.submitBatchRunMetircs)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status, organization_name, project_name, pattern_name, order, number);
+            (0, datadog_1.submitBatchRunMetrics)(timestampSeconds, durationSeconds, batch_run_number, test_setting_name, status, organization_name, project_name, pattern_name, order, number);
         });
     });
 }
