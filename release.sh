@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # タグ一覧を取得して、最新のタグを取得
+git fetch --tags --prune-tags --prune
 latest_tag=$(git tag -l --sort=-v:refname | head -n 1)
 
 # タグがない場合、v1.0.0 として初期化
