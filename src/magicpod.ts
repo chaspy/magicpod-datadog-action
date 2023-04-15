@@ -1,6 +1,13 @@
 import axios, {AxiosResponse} from 'axios'
 import {submitMetircs} from './datadog'
 
+export type Inputs = {
+  magicpod_api_token: string
+  magicpod_organization_name: string
+  magicpod_project_name: string
+  magicpod_record_count: string
+}
+
 interface BatchRuns {
   organization_name: string
   project_name: string
@@ -42,12 +49,13 @@ interface Results {
   data_patterns: any
 }
 
-export async function getBatchRuns(
-  magicpod_api_token: string,
-  magicpod_organization_name: string,
-  magicpod_project_name: string,
-  magicpod_record_count: string
-): Promise<BatchRuns | null> {
+export async function getBatchRuns(inputs: Inputs): Promise<BatchRuns | null> {
+  // Load insputs
+  const magicpod_api_token = inputs.magicpod_api_token
+  const magicpod_organization_name = inputs.magicpod_organization_name
+  const magicpod_project_name = inputs.magicpod_project_name
+  const magicpod_record_count = inputs.magicpod_record_count
+
   const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-runs/?count=${magicpod_record_count}`
   const headers = {
     accept: 'application/json',
