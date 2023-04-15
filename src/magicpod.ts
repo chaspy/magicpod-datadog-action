@@ -123,12 +123,12 @@ export function isStatusRunning(status: string): boolean {
   return status == 'running' ? true : false
 }
 
-export async function getBatchRun(
-  magicpod_api_token: string,
-  magicpod_organization_name: string,
-  magicpod_project_name: string,
-  batch_run_number: number
-): Promise<BatchRun | null> {
+export async function getBatchRun(inputs: Inputs): Promise<BatchRun | null> {
+  // Load insputs
+  const magicpod_api_token = inputs.magicpod_api_token
+  const magicpod_organization_name = inputs.magicpod_organization_name
+  const magicpod_project_name = inputs.magicpod_project_name
+
   const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-run/${batch_run_number}/`
   const headers = {
     accept: 'application/json',
