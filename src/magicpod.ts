@@ -23,13 +23,14 @@ interface TestCases {
   aborted: number
   unresolved: number
   total: number
+  details: Details[]
 }
 
 interface Details {
   pattern_name: string
   included_labels: string
   excluded_labels: string
-  results: Results
+  results: Results[]
 }
 
 interface Results {
@@ -38,7 +39,7 @@ interface Results {
   status: string
   started_at: string
   finished_at: string
-  // data_patterns	[...]
+  data_patterns: any
 }
 
 export async function getBatchRuns(
@@ -119,15 +120,15 @@ export async function getBatchRun(
   magicpod_organization_name: string,
   magicpod_project_name: string,
   batch_run_number: number
-): Promise<BatchRuns | null> {
-  const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-run/${batch_run_number}`
+): Promise<BatchRun | null> {
+  const url = `https://app.magicpod.com/api/v1.0/${magicpod_organization_name}/${magicpod_project_name}/batch-run/${batch_run_number}/`
   const headers = {
     accept: 'application/json',
     Authorization: `Token ${magicpod_api_token}`
   }
 
   try {
-    const response: AxiosResponse<BatchRuns> = await axios.get(url, {headers})
+    const response: AxiosResponse<BatchRun> = await axios.get(url, {headers})
     return response.data
   } catch (error) {
     console.error(`Error: ${error}`)
