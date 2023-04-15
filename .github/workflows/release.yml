@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm install
-      - run: npm run all
-      - uses: int128/release-typescript-action@v1
-        with:
-          major-version: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - run: bash release.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

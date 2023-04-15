@@ -8,8 +8,8 @@ if [ -z "$latest_tag" ]; then
   latest_tag="v1.0.0"
 fi
 
-# 最新のタグから minor バージョンを 1 つ上げる
-new_tag=$(echo "$latest_tag" | awk -F. '{ printf("%s.%s.%s", $1, $2+1, $3) }')
+# 最新のタグから minor バージョンを 1 つ上げ、パッチバージョンを 0 にリセットする
+new_tag=$(echo "$latest_tag" | awk -F. '{ printf("%s.%s.%s", $1, $2+1, 0) }')
 
 # compile
 npm install
@@ -20,10 +20,10 @@ git add .
 git commit -m 'compile'
 
 # 新しいタグをローカルに作成
-git tag $new_tag
+git tag "${new_tag}"
 
 # 新しいタグをリモートリポジトリにプッシュ
-git push origin $new_tag
+git push origin "${new_tag}"
 
 # GitHub の API を使ってリリースを作成
 # GITHUB_TOKEN は環境変数として設定するか、直接スクリプトに記述してください
