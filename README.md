@@ -35,11 +35,15 @@ This is an action to send metrics of MagicPod to Datadog.
 | Name                                                       | Description                                                                              | Type  | Unit   |
 | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- | ------ |
 | `custom.magicpod_datadog_action.batch_run.duration_second` | Time taken to execute the Batch Run. (Difference between `finished_at` and `started_at`) | Gauge | Second |
-| `custom.magicpod_datadog_action.batch_run.count`           | Whether the test was run or not. always send 1 for started_at.                           | Gauge | Second |
+| `custom.magicpod_datadog_action.batch_run.count`           | Whether the Batch Run was run or not. always send 1 for started_at.                      | Gauge | Count  |
+
+| `custom.magicpod_datadog_action.test_case.duration_second` | Time taken to execute each test case. (Difference between `finished_at` and `started_at`) | Gauge | Second |
+| `custom.magicpod_datadog_action.test_case.count` | Whether the test case was run or not. always send 1 for started_at. | Gauge | Count |
 
 ## Supported Tags
 
-`batch_run_number`, `status`, `test_setting_name`, `organization_name`, `project_name`
+- Batch Runs API: `batch_run_number`, `status`, `test_setting_name`, `organization_name`, `project_name`
+- Batch Run API: `batch_run_number`, `status`, `test_setting_name`, `organization_name`, `project_name`, `pattern_name`, `order`, `number`
 
 See [API Document](https://magic-pod.com/api/v1.0/doc/) for the details. (Models / BatchRun Section)
 
