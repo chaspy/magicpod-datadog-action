@@ -59,6 +59,7 @@ function submitMetircs(timestamp, value, batch_run_number, test_setting_name, st
         }
     };
     if (isTimestampAvailable(timestamp) && !(0, magicpod_1.isStatusRunning)(status)) {
+        console.log(`info: timestamp: ${timestamp}, project_name: ${project_name}, test_setting_name: ${test_setting_name}, status: ${status}, value: ${value}`);
         apiInstance
             .submitMetrics(durationSecondParams)
             .then((data) => {
