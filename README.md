@@ -32,13 +32,12 @@ This is an action to send metrics of MagicPod to Datadog.
 
 ## Metrics
 
-| Name                                                       | Description                                                                              | Type  | Unit   |
-| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------- | ----- | ------ |
-| `custom.magicpod_datadog_action.batch_run.duration_second` | Time taken to execute the Batch Run. (Difference between `finished_at` and `started_at`) | Gauge | Second |
-| `custom.magicpod_datadog_action.batch_run.count`           | Whether the Batch Run was run or not. always send 1 for started_at.                      | Gauge | Count  |
-
+| Name                                                       | Description                                                                               | Type  | Unit   |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----- | ------ |
+| `custom.magicpod_datadog_action.batch_run.duration_second` | Time taken to execute the Batch Run. (Difference between `finished_at` and `started_at`)  | Gauge | Second |
+| `custom.magicpod_datadog_action.batch_run.count`           | Whether the Batch Run was run or not. always send 1 for started_at.                       | Gauge | Count  |
 | `custom.magicpod_datadog_action.test_case.duration_second` | Time taken to execute each test case. (Difference between `finished_at` and `started_at`) | Gauge | Second |
-| `custom.magicpod_datadog_action.test_case.count` | Whether the test case was run or not. always send 1 for started_at. | Gauge | Count |
+| `custom.magicpod_datadog_action.test_case.count`           | Whether the test case was run or not. always send 1 for started_at.                       | Gauge | Count  |
 
 ## Supported Tags
 
