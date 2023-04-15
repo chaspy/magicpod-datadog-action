@@ -15,6 +15,9 @@ new_tag=$(echo "$latest_tag" | awk -F. '{ printf("%s.%s.%s", $1, $2+1, 0) }')
 npm install
 npm run all
 
+git config --global user.email "chaspy@users.noreply.github.com"
+git config --global user.name "Takeshi Kondo"
+
 # commit
 git add .
 git commit -m 'compile'
