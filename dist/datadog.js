@@ -150,7 +150,7 @@ function submitBatchRunMetircs(timestamp, value, batch_run_number, test_setting_
     }
     else {
         console.log(`timestamp ${timestamp} is not available. skip to send metrics`);
-        console.log(`info: timestamp: ${timestamp}, project_name: ${project_name}, test_setting_name: ${test_setting_name}, status: ${status}, value: ${value}, pattern_name:${pattern_name}, order:${order}, number:${number}`);
+        console.log(`info: timestamp: ${timestamp}, project_name: ${project_name}, test_setting_name: ${test_setting_name}, status: ${status}, value: ${value}, pattern_name:${pattern_name}, order:${order}, number:${number}, value:${value}`);
     }
 }
 exports.submitBatchRunMetircs = submitBatchRunMetircs;
