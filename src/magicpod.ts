@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {submitBstchRunsMetircs} from './datadog'
+import {submitBatchRunsMetircs} from './datadog'
 
 export type Inputs = {
   magicpod_api_token: string
@@ -100,7 +100,7 @@ export function processBatchRunsData(
     const finished_at = batchRun.finished_at
     const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
-    submitMetircs(
+    submitBatchRunsMetircs(
       timestampSeconds,
       durationSeconds,
       batch_run_number,
@@ -129,7 +129,7 @@ export function processBatchRunData(batchRunsData: BatchRuns): void {
     const finished_at = batchRun.finished_at
     const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
-    submitBstchRunsMetircs(
+    submitBatchRunMetircs(
       timestampSeconds,
       durationSeconds,
       batch_run_number,
