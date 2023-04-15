@@ -20,3 +20,4 @@ jobs:
       - uses: int128/release-typescript-action@v1
         with:
           major-version: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
