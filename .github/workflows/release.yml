@@ -1,0 +1,22 @@
+name: release
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/release.yaml
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm install
+      - run: npm run all
+      - uses: int128/release-typescript-action@v1
+        with:
+          major-version: 0
