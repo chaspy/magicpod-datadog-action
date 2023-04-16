@@ -1,5 +1,10 @@
 import axios, {AxiosResponse} from 'axios'
-import {submitBatchRunMetrics, submitBatchRunsMetrics} from './datadog'
+import {
+  BatchRunsMetrics,
+  BatchRunMetrics,
+  submitBatchRunMetrics,
+  submitBatchRunsMetrics
+} from './datadog'
 
 export type Inputs = {
   magicpod_api_token: string
@@ -102,15 +107,17 @@ export function processBatchRunsData(
     const finished_at = batchRun.finished_at
     const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
-    submitBatchRunsMetrics(
-      timestampSeconds,
-      durationSeconds,
-      batch_run_number,
-      test_setting_name,
-      status,
-      organization_name,
-      project_name
-    )
+    const metrics: BatchRunsMetrics = {
+      timestamp: timestampSeconds,
+      value: durationSeconds,
+      batch_run_number: batch_run_number,
+      test_setting_name: test_setting_name,
+      status: status,
+      organization_name: organization_name,
+      project_name: project_name
+    }
+
+    submitBatchRunsMetrics(metrics)
   })
 }
 
@@ -132,24 +139,24 @@ export function processBatchRunData(batchRunData: BatchRun): void {
       const finished_at = results.finished_at
       const timestampSeconds = getUnixTimestampSeconds(finished_at)
 
-      // const pattern_name = batchRunData.test_cases.details
-
       const status = results.status
       const order = results.order
       const number = results.number
 
-      submitBatchRunMetrics(
-        timestampSeconds,
-        durationSeconds,
-        batch_run_number,
-        test_setting_name,
-        status,
-        organization_name,
-        project_name,
-        pattern_name,
-        order,
-        number
-      )
+      const metrics: BatchRunMetrics = {
+        timestamp: timestampSeconds,
+        value: durationSeconds,
+        batch_run_number: batch_run_number,
+        test_setting_name: test_setting_name,
+        status: status,
+        organization_name: organization_name,
+        project_name: project_name,
+        pattern_name: pattern_name,
+        order: order,
+        number: number
+      }
+
+      submitBatchRunMetrics(metrics)
     })
   })
 }

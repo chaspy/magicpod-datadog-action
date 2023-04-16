@@ -48,98 +48,112 @@ function submitMetrics(
     .catch((error: any) => console.error(error))
 }
 
-export function submitBatchRunsMetrics(
-  timestamp: number,
-  value: number,
-  batch_run_number: number,
-  test_setting_name: string,
-  status: string,
-  organization_name: string,
+export interface BatchRunMetrics {
+  timestamp: number
+  value: number
+  batch_run_number: number
+  test_setting_name: string
+  status: string
+  organization_name: string
   project_name: string
-) {
+  pattern_name: string
+  order: number
+  number: number
+}
+
+export interface BatchRunsMetrics {
+  timestamp: number
+  value: number
+  batch_run_number: number
+  test_setting_name: string
+  status: string
+  organization_name: string
+  project_name: string
+}
+
+export function submitBatchRunsMetrics(metrics: BatchRunsMetrics) {
   const tags = [
-    `batch_run_number:${batch_run_number}`,
-    `test_setting_name:${test_setting_name}`,
-    `status:${status}`,
-    `organization_name:${organization_name}`,
-    `project_name:${project_name}`
+    `batch_run_number:${metrics.batch_run_number}`,
+    `test_setting_name:${metrics.test_setting_name}`,
+    `status:${metrics.status}`,
+    `organization_name:${metrics.organization_name}`,
+    `project_name:${metrics.project_name}`
   ]
 
   const durationSecondParams = createSubmitMetricsRequest(
     'custom.magicpod-datadog-action.batch_run.duration_second',
-    timestamp,
-    value,
+    metrics.timestamp,
+    metrics.value,
     'Second',
     tags
   )
 
   const countParams = createSubmitMetricsRequest(
     'custom.magicpod-datadog-action.batch_run.count',
-    timestamp,
+    metrics.timestamp,
     1,
     'Count',
     tags
   )
 
-  if (isTimestampAvailable(timestamp) && !isStatusRunning(status)) {
+  if (
+    isTimestampAvailable(metrics.timestamp) &&
+    !isStatusRunning(metrics.status)
+  ) {
     submitMetrics(
       'custom.magicpod-datadog-action.batch_run.duration_second',
       durationSecondParams
     )
     submitMetrics('custom.magicpod-datadog-action.batch_run.count', countParams)
   } else {
-    console.log(`timestamp ${timestamp} is not available. skip to send metrics`)
+    console.log(
+      `timestamp ${metrics.timestamp} is not available. skip to send metrics`
+    )
   }
 }
 
-export function submitBatchRunMetrics(
-  timestamp: number,
-  value: number,
-  batch_run_number: number,
-  test_setting_name: string,
-  status: string,
-  organization_name: string,
-  project_name: string,
-  pattern_name: string,
-  order: number,
-  number: number
-) {
+export function submitBatchRunMetrics(metrics: BatchRunMetrics) {
   const tags = [
-    `batch_run_number:${batch_run_number}`,
-    `test_setting_name:${test_setting_name}`,
-    `status:${status}`,
-    `organization_name:${organization_name}`,
-    `project_name:${project_name}`,
-    `pattern_name:${pattern_name}`,
-    `order:${order}`,
-    `number:${number}`
+    `batch_run_number:${metrics.batch_run_number}`,
+    `test_setting_name:${metrics.test_setting_name}`,
+    `status:${metrics.status}`,
+    `organization_name:${metrics.organization_name}`,
+    `project_name:${metrics.project_name}`,
+    `pattern_name:${metrics.pattern_name}`,
+    `order:${metrics.order}`,
+    `number:${metrics.number}`
   ]
 
   const durationSecondParams = createSubmitMetricsRequest(
     'custom.magicpod-datadog-action.test_case.duration_second',
-    timestamp,
+    metrics.timestamp,
 
-    value,
+    metrics.value,
     'Second',
     tags
   )
 
   const countParams = createSubmitMetricsRequest(
     'custom.magicpod-datadog-action.test_case.count',
-    timestamp,
+    metrics.timestamp,
     1,
     'Count',
     tags
   )
 
-  if (isTimestampAvailable(timestamp) && !isStatusRunning(status)) {
+  if (
+    isTimestampAvailable(metrics.timestamp) &&
+    !isStatusRunning(metrics.status)
+  ) {
     submitMetrics(
       'custom.magicpod-datadog-action.test_case.duration_second',
       durationSecondParams
     )
     submitMetrics('custom.magicpod-datadog-action.test_case.count', countParams)
   } else {
-    console.log(`timestamp ${timestamp} is not available. skip to send metrics`)
+    console.log(
+      `timestamp ${metrics.timestamp} is not available. skip to send metrics`
+    )
   }
 }
 
