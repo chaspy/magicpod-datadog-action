@@ -9,8 +9,9 @@ if [ -z "$latest_tag" ]; then
   latest_tag="v1.0.0"
 fi
 
-# 最新のタグから minor バージョンを 1 つ上げ、パッチバージョンを 0 にリセットする
-new_tag=$(echo "$latest_tag" | awk -F. '{ printf("%s.%s.%s", $1, $2+1, 0) }')
+# 最新のタグからパッチバージョンを 1 つ上げる
+new_tag=$(echo "$latest_tag" | awk -F. '{ printf("%s.%s.%s", $1, $2, $3+1) }')
+
 
 # compile
 npm install
