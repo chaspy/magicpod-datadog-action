@@ -31,20 +31,8 @@ git tag "${new_tag}"
 git push origin "${new_tag}"
 
 # 最新のタグと現在のブランチ間の全てのマージコミットを取得
-merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..HEAD)
+merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..${new_tag})
 echo "${merge_commits}"
-
-# マージコミットからプルリクエストの番号を取得し、それらのプルリクエストのタイトルとリンクを取得
-pr_titles_links=""
-while read -r line ; do
-    if [[ $line =~ Merge\ pull\ request\ #([0-9]*) ]] ; then
-        pr_number=${BASH_REMATCH[1]}
-        pr_info=$(curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/chaspy/magicpod-datadog-action/pulls/${pr_number})
-        pr_title=$(echo $pr_info | jq -r .title)
-        pr_link=$(echo $pr_info | jq -r .html_url)
-        pr_titles_links="${pr_titles_links}\n${pr_title}: ${pr_link}"
-    fi
-done <<< "$merge_commits"
 
 # GitHub の API を使ってリリースを作成
 # GITHUB_TOKEN は環境変数として設定するか、直接スクリプトに記述してください
@@ -52,7 +40,7 @@ repo_url="https://api.github.com/repos/chaspy/magicpod-datadog-action/releases"
 response=$(curl -s -X POST \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: token $GITHUB_TOKEN" \
-  -d "{\"tag_name\":\"$new_tag\",\"name\":\"Release $new_tag\",\"body\":\"${pr_titles_links}\"}" \
+  -d "{\"tag_name\":\"$new_tag\",\"name\":\"Release $new_tag\",\"body\":\"${merge_commits}\"}" \
   $repo_url)
 
 # リリースの作成に成功したか確認
