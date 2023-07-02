@@ -30,8 +30,9 @@ git tag "${new_tag}"
 # 新しいタグをリモートリポジトリにプッシュ
 git push origin "${new_tag}"
 
+echo ${latest_tag}
 # 最新のタグと現在のブランチ間の全てのマージコミットを取得
-merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..${new_tag})
+merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..main)
 echo "${merge_commits}"
 
 # GitHub の API を使ってリリースを作成
