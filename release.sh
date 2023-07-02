@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# タグ一覧を取得して、最新のタグを取得
+# Fetch all tags and get the latest tag
 git fetch --tags --prune-tags --prune
 latest_tag=$(git tag -l --sort=-v:refname | head -n 1)
 
-# タグがない場合、v1.0.0 として初期化
+# Initialize as v1.0.0 if there is no tag
 if [ -z "$latest_tag" ]; then
   latest_tag="v1.0.0"
 fi
 
-# 最新のタグからパッチバージョンを 1 つ上げる
+# Increment the patch version by 1 from the latest tag
 new_tag=$(echo "$latest_tag" | awk -F. '{ printf("%s.%s.%s", $1, $2, $3+1) }')
 
 
@@ -24,18 +24,17 @@ git config --global user.name "Takeshi Kondo"
 git add .
 git commit -m 'compile'
 
-# 新しいタグをローカルに作成
+# Create a new tag locally
 git tag "${new_tag}"
 
-# 新しいタグをリモートリポジトリにプッシュ
+# Push the new tag to the remote repository
 git push origin "${new_tag}"
 
-# 最新のタグと現在のブランチ間の全てのマージコミットを取得
+# Get all merge commits between the latest tag and the current branch
 merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..main)
 echo "${merge_commits}"
 
-# GitHub の API を使ってリリースを作成
-# GITHUB_TOKEN は環境変数として設定するか、直接スクリプトに記述してください
+# Create a release using GitHub's API
 repo_url="https://api.github.com/repos/chaspy/magicpod-datadog-action/releases"
 response=$(curl -s -X POST \
   -H "Accept: application/vnd.github+json" \
@@ -43,7 +42,7 @@ response=$(curl -s -X POST \
   -d "{\"tag_name\":\"$new_tag\",\"name\":\"Release $new_tag\",\"body\":\"${merge_commits}\"}" \
   $repo_url)
 
-# リリースの作成に成功したか確認
+# Check if the release was created successfully
 if echo "$response" | grep -q '"id":'; then
   echo "Release $new_tag was created successfully."
 else
