@@ -37,44 +37,46 @@ function submitMetrics(metricName, params) {
     })
         .catch((error) => console.error(error));
 }
-function submitBatchRunsMetrics(timestamp, value, batch_run_number, test_setting_name, status, organization_name, project_name) {
+function submitBatchRunsMetrics(metrics) {
     const tags = [
-        `batch_run_number:${batch_run_number}`,
-        `test_setting_name:${test_setting_name}`,
-        `status:${status}`,
-        `organization_name:${organization_name}`,
-        `project_name:${project_name}`
+        `batch_run_number:${metrics.batch_run_number}`,
+        `test_setting_name:${metrics.test_setting_name}`,
+        `status:${metrics.status}`,
+        `organization_name:${metrics.organization_name}`,
+        `project_name:${metrics.project_name}`
     ];
-    const durationSecondParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.batch_run.duration_second', timestamp, value, 'Second', tags);
-    const countParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.batch_run.count', timestamp, 1, 'Count', tags);
-    if (isTimestampAvailable(timestamp) && !(0, magicpod_1.isStatusRunning)(status)) {
+    const durationSecondParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.batch_run.duration_second', metrics.timestamp, metrics.value, 'Second', tags);
+    const countParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.batch_run.count', metrics.timestamp, 1, 'Count', tags);
+    if (isTimestampAvailable(metrics.timestamp) &&
+        !(0, magicpod_1.isStatusRunning)(metrics.status)) {
         submitMetrics('custom.magicpod-datadog-action.batch_run.duration_second', durationSecondParams);
         submitMetrics('custom.magicpod-datadog-action.batch_run.count', countParams);
     }
     else {
-        console.log(`timestamp ${timestamp} is not available. skip to send metrics`);
+        console.log(`timestamp ${metrics.timestamp} is not available. skip to send metrics`);
     }
 }
 exports.submitBatchRunsMetrics = submitBatchRunsMetrics;
-function submitBatchRunMetrics(timestamp, value, batch_run_number, test_setting_name, status, organization_name, project_name, pattern_name, order, number) {
+function submitBatchRunMetrics(metrics) {
     const tags = [
-        `batch_run_number:${batch_run_number}`,
-        `test_setting_name:${test_setting_name}`,
-        `status:${status}`,
-        `organization_name:${organization_name}`,
-        `project_name:${project_name}`,
-        `pattern_name:${pattern_name}`,
-        `order:${order}`,
-        `number:${number}`
+        `batch_run_number:${metrics.batch_run_number}`,
+        `test_setting_name:${metrics.test_setting_name}`,
+        `status:${metrics.status}`,
+        `organization_name:${metrics.organization_name}`,
+        `project_name:${metrics.project_name}`,
+        `pattern_name:${metrics.pattern_name}`,
+        `order:${metrics.order}`,
+        `number:${metrics.number}`
     ];
-    const durationSecondParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.test_case.duration_second', timestamp, value, 'Second', tags);
-    const countParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.test_case.count', timestamp, 1, 'Count', tags);
-    if (isTimestampAvailable(timestamp) && !(0, magicpod_1.isStatusRunning)(status)) {
+    const durationSecondParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.test_case.duration_second', metrics.timestamp, metrics.value, 'Second', tags);
+    const countParams = createSubmitMetricsRequest('custom.magicpod-datadog-action.test_case.count', metrics.timestamp, 1, 'Count', tags);
+    if (isTimestampAvailable(metrics.timestamp) &&
+        !(0, magicpod_1.isStatusRunning)(metrics.status)) {
         submitMetrics('custom.magicpod-datadog-action.test_case.duration_second', durationSecondParams);
         submitMetrics('custom.magicpod-datadog-action.test_case.count', countParams);
     }
     else {
-        console.log(`timestamp ${timestamp} is not available. skip to send metrics`);
+        console.log(`timestamp ${metrics.timestamp} is not available. skip to send metrics`);
     }
 }
 exports.submitBatchRunMetrics = submitBatchRunMetrics;
