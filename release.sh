@@ -31,6 +31,10 @@ git tag "${new_tag}"
 git push origin "${new_tag}"
 
 echo ${latest_tag}
+git show main > main
+cat main
+git show ${latest_tag} > latest
+cat latest
 # 最新のタグと現在のブランチ間の全てのマージコミットを取得
 merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..main)
 echo "${merge_commits}"
