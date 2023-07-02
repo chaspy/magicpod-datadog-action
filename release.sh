@@ -31,7 +31,7 @@ git tag "${new_tag}"
 git push origin "${new_tag}"
 
 # Get all merge commits between the latest tag and the current branch
-merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..main)
+merge_commits=$(git log --merges --pretty=format:"%s" "${latest_tag}"..main)
 echo "${merge_commits}"
 
 # Create a release using GitHub's API
