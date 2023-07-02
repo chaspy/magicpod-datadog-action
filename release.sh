@@ -32,6 +32,7 @@ git push origin "${new_tag}"
 
 # 最新のタグと現在のブランチ間の全てのマージコミットを取得
 merge_commits=$(git log --merges --pretty=format:"%s" ${latest_tag}..HEAD)
+echo "${merge_commits}"
 
 # マージコミットからプルリクエストの番号を取得し、それらのプルリクエストのタイトルとリンクを取得
 pr_titles_links=""
