@@ -32,7 +32,7 @@ git push origin "${new_tag}"
 
 # Get all merge commits between the latest tag and the current branch
 merge_commits=$(git log --merges --pretty=format:"%s" "${latest_tag}"..main)
-renovate_commits=$(git log --oneline "${latest_tag}"..main | grep 'Update dependency')
+renovate_commits=$(git log --oneline "${latest_tag}"..main | grep 'update dependency')
 release_note_body="${merge_commits}\n${renovate_commits}"
 
 # Create a release using GitHub's API
