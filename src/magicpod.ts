@@ -54,6 +54,14 @@ interface Result {
   started_at: string
   finished_at: string
   data_patterns: any
+  test_case: TestCase
+}
+
+interface TestCase {
+  number: number
+  name: string
+  url: string
+  step_count: number
 }
 
 export async function getBatchRuns(inputs: Inputs): Promise<BatchRuns | null> {
@@ -142,6 +150,7 @@ export function processBatchRunData(batchRunData: BatchRun): void {
       const status = results.status
       const order = results.order
       const number = results.number
+      const test_case_name = results.test_case.name
 
       const metrics: BatchRunMetrics = {
         timestamp: timestampSeconds,
@@ -153,7 +162,8 @@ export function processBatchRunData(batchRunData: BatchRun): void {
         project_name: project_name,
         pattern_name: pattern_name,
         order: order,
-        number: number
+        number: number,
+        test_case_name: test_case_name
       }
 
       submitBatchRunMetrics(metrics)
