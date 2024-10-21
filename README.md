@@ -42,7 +42,7 @@ This is an action to send metrics of MagicPod to Datadog.
 ## Supported Tags
 
 - Batch Runs API: `batch_run_number`, `status`, `test_setting_name`, `organization_name`, `project_name`
-- Batch Run API: `batch_run_number`, `status`, `test_setting_name`, `organization_name`, `project_name`, `pattern_name`, `order`, `number`, `test_case.name`
+- Batch Run API: `batch_run_number`, `status`, `test_setting_name`, `organization_name`, `project_name`, `pattern_name`, `order`, `number`, `test_case_name`
 
 See [API Document](https://magic-pod.com/api/v1.0/doc/) for the details. (Models / BatchRun Section)
 
