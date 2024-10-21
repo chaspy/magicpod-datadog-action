@@ -59,6 +59,7 @@ export interface BatchRunMetrics {
   pattern_name: string
   order: number
   number: number
+  test_case_name: string
 }
 
 export interface BatchRunsMetrics {
