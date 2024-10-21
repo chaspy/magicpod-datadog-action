@@ -122,7 +122,8 @@ export function submitBatchRunMetrics(metrics: BatchRunMetrics) {
     `project_name:${metrics.project_name}`,
     `pattern_name:${metrics.pattern_name}`,
     `order:${metrics.order}`,
-    `number:${metrics.number}`
+    `number:${metrics.number}`,
+    `test_case_name:${metrics.test_case_name}`
   ]
 
   const durationSecondParams = createSubmitMetricsRequest(
